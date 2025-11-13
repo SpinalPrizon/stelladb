@@ -1,0 +1,49 @@
+body {
+    background: #0a0a2a; /* Dark starry blue */
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background: #1c1c4e;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.card {
+    border: 1px solid #333;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.main-trekker {
+    background: #ffd700; /* Gold for Mains */
+    color: #000;
+}
+
+.support-trekker {
+    background: linear-gradient(to bottom, #add8e6, #4682b4); /* Light to dark blue for Supports */
+}
+
+#login-btn {
+    background: #4285f4; /* Google blue */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
