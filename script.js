@@ -25,13 +25,31 @@ document.getElementById('login-btn').addEventListener('click', () => {
     }).catch((error) => console.error(error));
 });
 
-// Simple Optimizer Logic (Expand with your metrics)
 function optimizeBuild() {
-    // Parse roster input, prioritize mono-elements
-    const roster = document.querySelector('textarea').value.split(',');
-    let optimized = 'Optimized: Mono-AQUA team for burst damage: ' + roster.join(' + ');
+    const rosterInput = document.querySelector('textarea').value.trim();
+    if (!rosterInput) return;
+    const rosters = rosterInput.split(',').map(r => r.trim());
+    // Simple mono-element logic: Group by element (parse from input like "Chitose (AQUA)")
+    const elements = {};
+    rosters.forEach(r => {
+        const match = r.match(/$$ (IGNIS|LUX|AQUA|TERRA|VENTUS|UMBRA) $$/);
+        if (match) {
+            const elem = match[1];
+            elements[elem] = (elements[elem] || 0) + 1;
+        }
+    });
+    const topElement = Object.keys(elements).reduce((a, b) => elements[a] > elements[b] ? a : b, null);
+    let optimized = `Prioritized Mono-${topElement} Team for Max Burst/DoT/AoE: `;
+    optimized += rosters.filter(r => r.includes(topElement)).join(' + ');
+    // Add mixed if needed
     document.getElementById('optimized-build').innerText = optimized;
-    // Save to Firebase if logged in
+    // Save to Firebase
+    if (auth.currentUser) {
+        db.collection('builds').add({ user: auth.currentUser.uid, build: optimized });
+    }
+}
+// Attach to form
+document.getElementById('roster-form').addEventListener('submit', (e) => { e.preventDefault(); optimizeBuild(); });
 }
 
 async function fetchXFeed() {
