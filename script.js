@@ -34,11 +34,21 @@ function optimizeBuild() {
     // Save to Firebase if logged in
 }
 
-// X Sync (Use fetch with X API - Get bearer token from dev account)
 async function fetchXFeed() {
-    // Example fetch - Replace with real API call
-    // const response = await fetch('https://api.x.com/2/users/by/username/StellaSoraEN/tweets', { headers: { Authorization: 'Bearer YOUR_TOKEN' } });
-    // Parse, filter <24h, highlight nerfs in red
-    document.getElementById('x-feed').innerHTML = '<p style="color: #FF0000;">Sample Nerf Announcement</p>';
+    const response = await fetch('https://api.twitter.com/2/users/by/username/StellaSoraEN/tweets?max_results=10', {
+        headers: { 'Authorization': 'Bearer AAAAAAAAAAAAAAAAAAAAABu15QEAAAAAzzXq9Y2lyiVaPLUORPJS%2Bu%2BNv0Y%3Dmj1vNQN5XDUCNOEZGC8XJB4ibnO0lhfPdQsyZr0uqv006jphvr' }
+    });
+    const data = await response.json();
+    let feedHtml = '';
+    data.data.forEach(tweet => {
+        // Filter <24h: Check tweet.created_at
+        const age = (Date.now() - new Date(tweet.created_at)) / (1000 * 60 * 60);
+        if (age < 24) {
+            let color = tweet.text.includes('nerf') ? '#FF0000' : (tweet.text.includes('hot-fix') ? '#8B0000' : '#fff');
+            feedHtml += `<p style="color: ${color};">${tweet.text}</p>`;
+        }
+    });
+    document.getElementById('x-feed').innerHTML = feedHtml;
 }
-fetchXFeed(); // Run on load, setInterval for 30min
+fetchXFeed();
+setInterval(fetchXFeed, 30 * 60 * 1000); // Every 30 mins
