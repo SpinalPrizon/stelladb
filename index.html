@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StellaDB - Stella Sora Build Optimizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#">Trekkers</a></li>
+            <li><a href="#">Items</a></li>
+            <li><a href="#">Crafting</a></li>
+            <li><a href="#">Stages</a> <!-- Submenu: Ascension, Bounty Trial, etc. --></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Raids</a></li>
+            <li><a href="#">Tools ▼</a> <!-- Dropdown: Damage Calculator, Optimizer --></li>
+        </ul>
+        <button id="login-btn">Sign In with Google</button>
+    </nav>
+    
+    <section class="news-sync">
+        <h2>Latest from @StellaSoraEN</h2>
+        <div id="x-feed"></div> <!-- Populated via JS fetch -->
+    </section>
+    
+    <section class="trekker-profile">
+        <h2>Sample Trekker: Chitose (AQUA - Main Trekker)</h2>
+        <div class="card main-trekker">
+            <img src="placeholder-chitose.jpg" alt="Chitose">
+            <p>Skills: Serpent Glide (+6% ATK), etc.</p>
+            <p>Optimal Build: Mono-AQUA for max burst damage.</p>
+            <button onclick="optimizeBuild()">Optimize Build</button>
+        </div>
+        <!-- Support example -->
+        <div class="card support-trekker">
+            <p>Support: Freesia - Azure Embrace (+4% ATK with dodging)</p>
+        </div>
+    </section>
+    
+    <section class="optimizer">
+        <h2>Build Optimizer</h2>
+        <form id="roster-form">
+            <label>Enter Roster (Manual Input):</label>
+            <textarea placeholder="e.g., Chitose (AQUA), Freesia (AQUA)..."></textarea>
+            <button type="submit">Optimize</button>
+        </form>
+        <div id="optimized-build"></div>
+    </section>
+    
+    <script src="script.js"></script>
+    <!-- Firebase SDK for Auth/DB -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+</body>
+</html>
